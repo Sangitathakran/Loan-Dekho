@@ -9,6 +9,7 @@ use App\Http\Controllers\SessionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,13 +42,15 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('rtl');
 	})->name('rtl');
 
-	Route::get('product-management', function () {
-		return view('laravel-examples/product-management');
-	})->name('product-management');
+	// Route::get('product-management', function () {
+	// 	return view('laravel-examples/product-management');
+	// })->name('product-management');
 
-	Route::get('add-product', function () {
-		return view('laravel-examples/add-product');
-	})->name('add-product');
+	// Route::get('add-product', function () {
+	// 	return view('laravel-examples/add-product');
+	// })->name('add-product');
+
+	Route::resource('products', ProductController::class);
 
 	Route::get('tables', function () {
 		return view('tables');
@@ -84,6 +87,7 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
 	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
 	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+	Route::get('/', [HomeController::class, 'home']);
 
 });
 
@@ -92,5 +96,5 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/home', function () {
-    return view('session/login-session');
-})->name('login');
+    return view('frontend/home');
+})->name('home');
